@@ -3,30 +3,32 @@ const app = express()
 const port = 5000
 const Joi = require('joi')
 const ProductRouter=require('./products.routes.js')
+require('dotenv').config();
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 const mongoose = require('mongoose')
 const { MongoClient } = require('mongodb');
 
-const Product= require('./Models/product.model.js')
+const pwd=process.env.password
 // Middleware to parse URL-encoded form data in the request body
 // app.use(express.urlencoded({ extended: true }));
 
-// mongoose.connect('mongodb+srv://krishnendu19802:Fx8uunIHaJJkorOW@cluster0.4lahfo1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0').then(() => {
-//   console.log('Connected successfully')
-//   app.listen(port, () => {
-//     console.log(`Example app listening on port ${port}`)
-//   })
-// }).catch(() => { console.log('error connecting') })
-
-
-mongoose.connect('mongodb://127.0.0.1:27017/learning?directConnection=true').then(() => {
+mongoose.connect(`mongodb+srv://krishnendu19802:${pwd}@cluster0.4lahfo1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`).then(() => {
   console.log('Connected successfully')
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
-}).catch((err) => { console.log('error connecting',err) })
+}).catch(() => { console.log('error connecting') })
+
+
+// mongoose.connect('mongodb://127.0.0.1:27017/learning?directConnection=true').then(() => {
+//   console.log('Connected successfully')
+//   app.listen(port, () => {
+//     console.log(`Example app listening on port ${port}`)
+//   })
+// }).catch((err) => { console.log('error connecting',err) })
 
 let arr = [
   { id: 1, name: 'course1' },
